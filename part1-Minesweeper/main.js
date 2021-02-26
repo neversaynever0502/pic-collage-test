@@ -24,100 +24,41 @@ function find_repeat_2D_array(arr,i,j){
       this_repeat = true
     }
   })
-  // console.log('find_repeat_2D_array:',arr,i,j,this_repeat)
   return this_repeat
 }
 function findAllBesideZero(arr,i,j){
   let lightupArr = []
-  // let c = true
-  // let c2 = true
-  // let w = 0
-  // while (c) {
-  //   let beside_arr= besides_numbers_arr(arr,i,j)
-  //   for(k=0; k<beside_arr.length; k++) {
-  //     if(!find_repeat_2D_array(lightupArr,beside_arr[k][1],beside_arr[k][2])){
-  //       lightupArr.push(beside_arr[k])
-  //     }
-  //     if (beside_arr[k][0] == 0) {
-        
-  //     }else{
-  //       c2=false
-  //     }
-  //   }
-  //   if(!c2){
-  //     c=false
-  //   }
-  // }
-  // for(loop=0;loop<1;loop++) {
-  //   loop = 0
-  //   let beside_arr = []
-  //   for(k=0;k<beside_arr.length;k++){
-  //     if (loop === 0) {
-  //       beside_arr= [...beside_arr, besides_numbers_arr(arr,i,j)]  
-  //     } else {
-  //       // @TODO Zuray Question....
-  //       // beside_arr= [...beside_arr, besides_numbers_arr(arr,beside_arr[loop][k][1],beside_arr[loop][k][2])]
-  //     }
-  //     // if(!find_repeat_2D_array(lightupArr,beside_arr[loop][k][1],beside_arr[loop][k][2])){
-  //       lightupArr.push(beside_arr[loop][k])
-  //     // }
-  //     // if(beside_arr[loop][k][0]==0){
-  //       // i= beside_arr[loop][k][1]
-  //       // j = beside_arr[loop][k][2]
-  //       // beside_arr.push(besides_numbers_arr(arr,besides_numbers_arr(arr,beside_arr[loop][k][1],beside_arr[loop][k][2])))
-  //     // }
-  //   }
-  // }
-  // return lightupArr
-  
-  // for(loop=0;loop<10;loop++){
-  lightupArr.push([arr[i][j],i,j])
-  let beside_arr= besides_numbers_arr(arr,i,j)
-  for(k=0;k<beside_arr.length;k++){
-    if(!find_repeat_2D_array(lightupArr,beside_arr[k][1],beside_arr[k][2])&&beside_arr[k][0]!=undefined){
-      lightupArr.push(beside_arr[k])
-    }
-    if(beside_arr[k][0]==0){
-      let beside_arr2 = besides_numbers_arr(arr,beside_arr[k][1],beside_arr[k][2])
-      for(let k=0;k<beside_arr2.length;k++){
-        if(!find_repeat_2D_array(lightupArr,beside_arr2[k][1],beside_arr2[k][2])&&beside_arr2[k][0]!=undefined){
-          lightupArr.push(beside_arr2[k])
-        }
-        if(beside_arr2[k][0]==0){
-          let beside_arr3 = besides_numbers_arr(arr,beside_arr2[k][1],beside_arr2[k][2])
-          for(let k=0;k<beside_arr3.length;k++){
-              if(!find_repeat_2D_array(lightupArr,beside_arr3[k][1],beside_arr3[k][2])&&beside_arr3[k][0]!=undefined){
-                lightupArr.push(beside_arr3[k])
-              }
-              if(beside_arr3[k][0]==0){
-                let beside_arr4 = besides_numbers_arr(arr,beside_arr3[k][1],beside_arr3[k][2])
-                for(let k=0;k<beside_arr4.length;k++){
-                  if(!find_repeat_2D_array(lightupArr,beside_arr4[k][1],beside_arr4[k][2])&&beside_arr4[k][0]!=undefined){
-                    lightupArr.push(beside_arr4[k])
-                  }
-                    if(beside_arr4[k][0]==0){
-                      let beside_arr5 = besides_numbers_arr(arr,beside_arr4[k][1],beside_arr4[k][2])
-                      for(let k=0;k<beside_arr5.length;k++){
-                        if(!find_repeat_2D_array(lightupArr,beside_arr5[k][1],beside_arr5[k][2])&&beside_arr5[k][0]!=undefined){
-                          lightupArr.push(beside_arr5[k])
-                        }
-                        if(beside_arr5[k][0]==0){
-                          let beside_arr6 = besides_numbers_arr(arr,beside_arr5[k][1],beside_arr5[k][2])
-                          for(let k=0;k<beside_arr6.length;k++){
-                            if(!find_repeat_2D_array(lightupArr,beside_arr6[k][1],beside_arr6[k][2])&&beside_arr6[k][0]!=undefined){
-                              lightupArr.push(beside_arr6[k])
 
-                            }
-                          }
-                        }
-                      }
-                    }
-                }
-              }
+  lightupArr.push([arr[i][j],i,j])
+  let beside_arr= []
+  beside_arr.push(besides_numbers_arr(arr,i,j))
+
+  let continueRun = true
+  let loop = 0
+
+  while(continueRun){
+    let thisLoopHasNoZeroBesides = true
+    if(beside_arr[loop]&&beside_arr[loop].length){
+      for(k=0;k<beside_arr[loop].length;k++){
+        i=beside_arr[loop][k][1]
+        j=beside_arr[loop][k][2]
+        if(!find_repeat_2D_array(lightupArr,i,j)&&beside_arr[loop][k][0]!=undefined){
+          lightupArr.push(beside_arr[loop][k])
+          if(beside_arr[loop][k][0]==0){
+            beside_arr=[...beside_arr,besides_numbers_arr(arr,i,j)]
           }
+        }
+        if(beside_arr[loop][k][0]==0){
+          thisLoopHasNoZeroBesides = false
         }
       }
     }
+
+
+    if(thisLoopHasNoZeroBesides){
+      continueRun = false
+    }
+    loop++
   }
 
   return lightupArr
@@ -167,19 +108,12 @@ function click_little_square(i,j){
       document.querySelector(`div[location${i}${j}]`).innerHTML = `<div></div>`
 
       let ar = findAllBesideZero(grid,i,j)
-      console.log('ar:::',ar)
-      console.log('ar-length::',ar.length)
-      // if(!grid_show[i][j]){ 
-      //   whole_can_click_count = whole_can_click_count -1
-      // }
 
       for(k=0;k<ar.length;k++){
-        // document.querySelector(`div[location${ar[k][1]}${ar[k][2]}]`).classList.add('clicked')
 
         if(ar[k][0]!=undefined){
           real_show = ar[k][0]
-          // if(real_show==0){
-          console.log(grid_show[ar[k][1],ar[k][2]])
+
           if(grid_show[ar[k][1]][ar[k][2]]!==true){
             whole_can_click_count = whole_can_click_count -1
             console.log('whole_can_click_count:',whole_can_click_count)
@@ -220,18 +154,7 @@ function click_little_square(i,j){
 
         console.log('whole_can_click_count:',whole_can_click_count)
       }
-
     }
-
-    // document.querySelector(`div[numberlocation${i}${j}]`).classList.remove('numbers_square')
-    // document.querySelector(`div[numberlocation${i}${j}]`).classList.add('numbers_square_clicked')
-
-
-    // console.log(thisDiv)
-    // thisDiv.addClass('')
-    // if(grid[i][j]==-1){
-    //   alert('you lose')
-    // }
   }
   auto_check_win()
 }
@@ -262,20 +185,8 @@ function random_generate_bumb(arr,n,avoid_bumb_row,avoid_bumb_column){
 }
 
 function calculate_numbers_in_little_square(arr,column_count,rows_count){
-  console.log(arr,column_count,rows_count)
   for(i=0;i<column_count;i++){
     for(j=0;j<rows_count;j++){
-      console.log(i,j)
-      // if(i==0){
-      //   arr[i][j] = '?'
-      // }else if(j==0){
-      //   arr[i][j] = '?'
-      // }else if(i==column_count-1){
-      //   arr[i][j] = '?2'
-      // }else if(j=rows_count-1){
-      //   arr[i][j] = '?2'
-      // }else{
-      //   console.log(123)
       let bumb_number = 0
       if(arr[i][j]!==-1){
         for(rows=-1;rows<=1;rows++){
@@ -285,24 +196,10 @@ function calculate_numbers_in_little_square(arr,column_count,rows_count){
             }
           }
         }
-        // if(arr[i-1]&&arr[i-1][j]==-1){
-        //   bumb_number++
-        // }
-        // if(arr[i][j-1]&&arr[i][j-1]==-1){
-        //   bumb_number++
-        // }
-        // if(arr[i+1]&&arr[i+1][j]==-1){
-        //   bumb_number++
-        // }
-        // if(arr[i][j+1]&&arr[i][j+1]==-1){
-        //   bumb_number++
-        // }
         arr[i][j] = bumb_number
       }else{
-        console.log('炸彈',i,j)
-        
+        console.log('bumb',i,j)
       }
-      // }
     }
   }
   return arr
@@ -318,7 +215,6 @@ function restart(){
     for(j=0;j<rows_count;j++){
       html_innput=html_innput+`<div class='little_square' onclick='click_little_square(${i},${j})' oncontextmenu='click_little_square(${i},${j})' location${i}${j}='true'><div class='numbers_square' numberlocation${i}${j}='true'>${grid[i][j]}</div></div>`
     }
-    // html_innput=html_innput+'<div style="margin-top:-2px"></div>'
   }
 
   document.getElementById("game_board").style.width=30*rows_count;
@@ -337,7 +233,6 @@ function render_bumb_and_whole_data(avoid_bumb_row,avoid_bumb_column){
     for(j=0;j<rows_count;j++){
       html_innput=html_innput+`<div class='little_square' onclick='click_little_square(${i},${j})' oncontextmenu='click_little_square(${i},${j})' location${i}${j}='true'><div class='numbers_square' numberlocation${i}${j}='true'>${grid[i][j]}</div></div>`
     }
-    // html_innput=html_innput+'<div style="margin-top:-2px"></div>'
   }
   document.getElementById('game_board').innerHTML=html_innput
 }
