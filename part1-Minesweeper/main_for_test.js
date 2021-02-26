@@ -96,7 +96,6 @@ function click_little_square(i,j,click_right_or_left,whole_can_click_count,grid_
         console.log('lose it bumb!')
       }else if(grid[i][j]==0){
         // if the number is zero on the box, 
-        console.log(456)
         let ar = findAllBesideZero(grid,i,j)
         whole_can_click_count = whole_can_click_count -1
         for(k=0;k<ar.length;k++){
@@ -106,7 +105,7 @@ function click_little_square(i,j,click_right_or_left,whole_can_click_count,grid_
             if(grid_show[ar[k][1]]!=undefined&&!grid_show[ar[k][1]][ar[k][2]]){
 
               // whole_can_click_count = whole_can_click_count -1
-              console.log('whole_can_click_count:',whole_can_click_count)
+              // console.log('whole_can_click_count:',whole_can_click_count)
               grid_show[ar[k][1],ar[k][2]] = true
             }   
           }
@@ -116,7 +115,7 @@ function click_little_square(i,j,click_right_or_left,whole_can_click_count,grid_
           real_show = grid[i][j]
           // console.log(grid_show)
           whole_can_click_count = whole_can_click_count - 1
-          console.log('whole_can_click_count:',whole_can_click_count)
+          // console.log('whole_can_click_count:',whole_can_click_count)
 
           grid_show[i][j] = true
         }

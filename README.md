@@ -16,6 +16,9 @@ npm install
 
 npm run test
 
+![demo](./image2.png)
+
+
 
 ## My Coding Explanation:
 
@@ -45,4 +48,7 @@ npm i
 npm i -g mocha
 
 npm run test
+
+![demo](./image3.png)
+
 
