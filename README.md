@@ -6,6 +6,9 @@ Go into the folder(Part1-Minesweeper)
 
 Just open the main.html file in browser.
 
+![demo](./image1.png)
+
+
 
 ## RUN test:
 
@@ -33,10 +36,13 @@ Go into the folder(part2-Counting 7s)
 
 ## Get g(1000):
 
-Run "node main.js" on terminal.
+node main.js
 
 ## Test:
 
-Run "npm i" on terminal.
+npm i
 
-Run "npm run test" or "mocha" on terminal.
+npm i -g mocha
+
+npm run test
+

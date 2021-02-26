@@ -1,9 +1,11 @@
 Get g(1000):
 
-Run "node main.js" on terminal.
+node main.js
 
 
 Test:
 
-Run "npm i" on terminal.
-Run "npm run test" or "mocha" on terminal.
+npm i
+npm i -g mocha
+npm run test
+
