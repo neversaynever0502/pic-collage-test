@@ -70,91 +70,61 @@ function findAllBesideZero(arr,i,j){
 }
 
 // Click on the square box
-function click_little_square(i,j){
-  if(firstClick){
-    render_bumb_and_whole_data(i,j)
-    firstClick=false
-  }
+function click_little_square(i,j,click_right_or_left,whole_can_click_count,grid_show,grid){
+  // if(firstClick){
+  //   render_bumb_and_whole_data(i,j)
+  //   firstClick=false
+  // }
   // click right 
-  if (event.type == 'contextmenu') {
-    console.log('click right button')
-    if(document.querySelector(`div[location${i}${j}]`).classList.contains('bumb')){
-      document.querySelector(`div[location${i}${j}]`).classList.remove('bumb')
-      document.querySelector(`div[location${i}${j}]`).innerHTML = '<div></div>'
-
-      bumb_count = bumb_count+1
-      grid_show[i][j] = false
-      document.getElementById('flag_remain').innerHTML=`flag remain: ${bumb_count}`
-    }else{
-      document.querySelector(`div[location${i}${j}]`).classList.add('bumb')
-      document.querySelector(`div[location${i}${j}]`).innerHTML = '<div style="text-align:center"><img style="width:15px;height:15px;margin-top:2px" src="https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/finish_flag-512.png" /></div>'
-      bumb_count = bumb_count-1
-      grid_show[i][j] = true
-      document.getElementById('flag_remain').innerHTML=`flag remain: ${bumb_count}`  
+  if (click_right_or_left == 'right_click_put_flag') {
+    // console.log('click right button')
+    if(grid_show[i]!==undefined){
+      if(grid_show[i][j]){
+        bumb_count = bumb_count+1
+        grid_show[i][j] = false
+      }else{
+        bumb_count = bumb_count-1
+        grid_show[i][j] = true
+      }
     }
   }else{
-    document.querySelector(`div[location${i}${j}]`).classList.add('clicked')
 
-    let real_show = ''
-
-    if(grid[i][j]==-1){
-      // if it is a bumb
-      real_show = '<img style="width:15px;height:15px;margin-top:2px" src="https://cdn3.iconfinder.com/data/icons/streamline-icon-set-free-pack/48/Streamline-02-512.png" />'
-      document.querySelector(`div[location${i}${j}]`).innerHTML = `<div>${real_show}</div>`
-      grid_show[i][j] = true
-      lose_or_not = true
-      alert('bumb!You lose!')
-    }else if(grid[i][j]==0){
-      // if the number is zero on the box, 
-      real_show = grid[i][j]
-      document.querySelector(`div[location${i}${j}]`).innerHTML = `<div></div>`
-
-      let ar = findAllBesideZero(grid,i,j)
-
-      for(k=0;k<ar.length;k++){
-
-        if(ar[k][0]!=undefined){
-          real_show = ar[k][0]
-
-          if(grid_show[ar[k][1]][ar[k][2]]!==true){
-            whole_can_click_count = whole_can_click_count -1
-            console.log('whole_can_click_count:',whole_can_click_count)
-            grid_show[ar[k][1],ar[k][2]] = true
-          }
-          if(real_show==1){
-            document.querySelector(`div[location${ar[k][1]}${ar[k][2]}`).innerHTML = `<div class='clicked_1'>${real_show}</div>`
-          }else if(real_show==2){
-            document.querySelector(`div[location${ar[k][1]}${ar[k][2]}`).innerHTML = `<div class='clicked_2'>${real_show}</div>`
-          }else if(real_show==3){
-            document.querySelector(`div[location${ar[k][1]}${ar[k][2]}`).innerHTML = `<div class='clicked_3'>${real_show}</div>`
-          }else if(real_show>=4){
-            document.querySelector(`div[location${ar[k][1]}${ar[k][2]}`).innerHTML = `<div class='clicked_4'>${real_show}</div>`
-          }else{
-            document.querySelector(`div[location${ar[k][1]}${ar[k][2]}`).innerHTML = `<div class='clicked_0'>${real_show}</div>`
-          }          
-        }
-      }
-    }else{
-      if(!grid_show[i][j]){
-        real_show = grid[i][j]
-        if(real_show==1){
-          document.querySelector(`div[location${i}${j}]`).innerHTML = `<div class='clicked_1'>${real_show}</div>`
-        }else if(real_show==2){
-          document.querySelector(`div[location${i}${j}]`).innerHTML = `<div class='clicked_2'>${real_show}</div>`
-        }else if(real_show==3){
-          document.querySelector(`div[location${i}${j}]`).innerHTML = `<div class='clicked_3'>${real_show}</div>`
-        }else if(real_show>=4){
-          document.querySelector(`div[location${i}${j}]`).innerHTML = `<div class='clicked_4'>${real_show}</div>`
-        }
-        // console.log(grid_show)
-        whole_can_click_count = whole_can_click_count - 1
+    if(grid[i]!==undefined){
+      if(grid[i][j]==-1){
         grid_show[i][j] = true
+        lose_or_not = true
+        console.log('lose it bumb!')
+      }else if(grid[i][j]==0){
+        // if the number is zero on the box, 
+        console.log(456)
+        let ar = findAllBesideZero(grid,i,j)
+        whole_can_click_count = whole_can_click_count -1
+        for(k=0;k<ar.length;k++){
 
-        console.log('whole_can_click_count:',whole_can_click_count)
+          if(ar[k][0]!=undefined){
+
+            if(grid_show[ar[k][1]]!=undefined&&!grid_show[ar[k][1]][ar[k][2]]){
+
+              // whole_can_click_count = whole_can_click_count -1
+              console.log('whole_can_click_count:',whole_can_click_count)
+              grid_show[ar[k][1],ar[k][2]] = true
+            }   
+          }
+        }
+      }else{
+        if(grid_show[i]&&grid_show[i][j]!==true){
+          real_show = grid[i][j]
+          // console.log(grid_show)
+          whole_can_click_count = whole_can_click_count - 1
+          console.log('whole_can_click_count:',whole_can_click_count)
+
+          grid_show[i][j] = true
+        }
       }
     }
   }
-  auto_check_win()
+  let winOrNot = auto_check_win(whole_can_click_count)
+  return [winOrNot,whole_can_click_count,grid_show,grid]
 }
 
 // Creating two-dimensional matrices
@@ -168,7 +138,7 @@ function make2Darray(column_count,rows_count){
 
 // Insert the bombs randomly and can not be repeated and can not be the first click of the box
 function random_generate_bumb(arr,n,avoid_bumb_row,avoid_bumb_column){
-  console.log(arr,n,avoid_bumb_row,avoid_bumb_column)
+  // console.log(arr,n,avoid_bumb_row,avoid_bumb_column)
   // console.log(arr[9])
   let bumb_location = []
   while(bumb_location.length<n){
@@ -200,7 +170,7 @@ function calculate_numbers_in_little_square(arr,column_count,rows_count){
         }
         arr[i][j] = bumb_number
       }else{
-        console.log('bumb',i,j)
+        // console.log('bumb',i,j)
       }
     }
   }
@@ -232,12 +202,12 @@ function render_bumb_and_whole_data(avoid_bumb_row,avoid_bumb_column){
   grid = random_generate_bumb(grid,bumb_count,avoid_bumb_row,avoid_bumb_column)
   grid = calculate_numbers_in_little_square(grid,column_count,rows_count)
   grid_show = make2Darray(column_count,rows_count)
-  for(i=0;i<column_count;i++){
-    for(j=0;j<rows_count;j++){
-      html_innput=html_innput+`<div class='little_square' onclick='click_little_square(${i},${j})' oncontextmenu='click_little_square(${i},${j})' location${i}${j}='true'><div class='numbers_square' numberlocation${i}${j}='true'>${grid[i][j]}</div></div>`
-    }
-  }
-  document.getElementById('game_board').innerHTML=html_innput
+  // for(i=0;i<column_count;i++){
+  //   for(j=0;j<rows_count;j++){
+  //     html_innput=html_innput+`<div class='little_square' onclick='click_little_square(${i},${j})' oncontextmenu='click_little_square(${i},${j})' location${i}${j}='true'><div class='numbers_square' numberlocation${i}${j}='true'>${grid[i][j]}</div></div>`
+  //   }
+  // }
+  // document.getElementById('game_board').innerHTML=html_innput
 }
 
 // check if win or not by clicking button
@@ -255,11 +225,27 @@ function check_win(){
 }
 
 // each click to check if win
-function auto_check_win(){
-  console.log(whole_can_click_count)
+function auto_check_win(whole_can_click_count){
+  // console.log('whole_can_click_count:',whole_can_click_count)
   if(bumb_count==0&&whole_can_click_count==0){
-    alert('Congraduations!You Win!')
+    // alert('Congraduations!You Win!')
+    return true
+  }else{
+    return false
   }
 }
 
-restart()
+// restart()
+
+
+module.exports={
+  besides_numbers_arr,
+  find_repeat_2D_array,
+  findAllBesideZero,
+  click_little_square,
+  make2Darray,
+  random_generate_bumb,
+  calculate_numbers_in_little_square,
+  restart,
+  check_win
+}
