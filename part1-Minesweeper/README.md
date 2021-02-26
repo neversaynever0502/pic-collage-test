@@ -1,15 +1,16 @@
-Open Website:
+## Open Website:
 
 Just open the main.html file in browser.
 
 
-RUN test:
+## RUN test:
 
 npm install
+
 npm run test
 
 
-My Coding Explanation:
+## My Coding Explanation:
 
 1.At the beginning, the matrix called grid is used to put down a two-dimensional array.
 

@@ -1,11 +1,13 @@
-Get g(1000):
+## Get g(1000):
 
 node main.js
 
 
-Test:
+## Test:
 
 npm i
+
 npm i -g mocha
+
 npm run test
 
